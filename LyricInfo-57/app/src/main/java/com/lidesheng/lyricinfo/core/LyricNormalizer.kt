@@ -248,7 +248,8 @@ object LyricNormalizer {
             val tags = LRC_TIME_TAG.findAll(body).toList()
             if (tags.size == 1 && tags[0].value == lineTimeTag) {
                 val text = body.substring(0, tags[0].range.first)
-                outputLines.add("$lineTimeTag$text")
+                val lastLineTime = outputLines.lastOrNull()?.substringBefore("]")?.plus("]") ?: lineTimeTag
+                outputLines.add("$lastLineTime$text")
                 continue
             }
             if (tags.isEmpty()) {
